@@ -1,0 +1,2 @@
+#define MACRO Test #,
+MACRO
