@@ -1,9 +1,15 @@
 #!/bin/bash
 
 testPath="$1"
+newName="$2"
 
 if [ "$testPath" = "" ]; then
-	echo No test provided
+	>&2 echo No test provided
+	exit 1
+fi
+
+if [ "$newName" = "" ]; then
+	>&2 echo No new name provided
 	exit 1
 fi
 
@@ -34,20 +40,25 @@ if [ ! -f "$resultDir"/"$resultName" ]; then
 	# maybe replace "Test" with "Result" in the name
 	resultName=$(echo "$resultName" | sed s/Test/Result/)
 
-	echo "$resultName"
-	echo "$resultDir"/"$resultName"
 
 	if [ ! -f "$resultDir"/"$resultName" ]; then
 		# try to replace "test" with "result" (lowercase)
 		resultName=$(echo "$resultName" | sed s/test/result/)
 
 		if [ ! -f "$resultDir"/"$resultName" ]; then
-			echo Unable to find result file for "$testName"
+			>&2 echo Unable to find result file for "$testName"
 			exit 1
 		fi
 	fi
 fi
 
-echo Testname: "$testName"
-echo Resultname: "$resultName"
-		
+if [ ! "$testName" = "$resultName" ]; then
+	echo After renaming \""$testName"\" and \""$resultName"\" will have the same name. Do you want to continue?
+	read -p "Continue? [y|N]? "
+
+	if [[ ! $REPLY =~ ^[Yy]$ ]]; then exit 0; fi
+fi
+
+
+echo Renaming \""$testDir"/"$testName"\" to \""$testDir"/"$newName"\"
+echo and \""$resultDir"/"$resultName"\" to \""$resultDir"/"$newName"\"
