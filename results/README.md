@@ -1,2 +1,2 @@
 # Results
-This direcotry holds the preprocessed results of the inputs that can be found in the ../tests/ directory. All results have been produced using the Arma (3) preprocessor directly. No external tools involved.
+This directory holds a bunch of preprocessed input that can be used as a test-case for any preprocessor-implementation trying to mimic the Arma (3) preprocessor. The content that was fed into the preprocessor in order to produce the listed outputs, can be found in the ../tests/ directory.
